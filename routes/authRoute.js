@@ -8,7 +8,7 @@ const {
   forgetPassword,
   verifyPassResetCode,
   resetPassword,
-} = require("../servises/authService");
+} = require("../services/authService");
 
 const {
   signupUserValidator,
