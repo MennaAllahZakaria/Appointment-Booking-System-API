@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
         required: [true,'Phone number is required'],
         unique: true,
         validate: (value) => {
-            const egyptPhoneRegex = /^(\+20|0020)?(10|11|12|15)\d{8}$/;
+            const egyptPhoneRegex = /^(\+20|0020|0)?(10|11|12|15)\d{8}$/;
             return egyptPhoneRegex.test(value);
         },
         message: (props) => `${props.value} is not a valid Egyptian phone number!`,

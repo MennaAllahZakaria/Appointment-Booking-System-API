@@ -112,16 +112,25 @@ exports.verifyEmailUser = asyncHandler(async (req, res, next) => {
 
 exports.login = asyncHandler(async (req, res, next) => {
   //1)check if password and email in the body (validation)
+  if (!req.body.email || !req.body.password) {
+    return next(new ApiError("Email and password are required", 400));
+  }  
   //2)check if user exists and check if password is correct
   const user = await User.findOne({
     email: req.body.email,
-  });
-
-  if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
-    return next(new ApiError("Incorrect email or password", 401));
+  }).select('+password');
+  if (!user.password) {
+    return next(new ApiError("Password is not set for this user", 500));
   }
+  
+    // 3) Compare passwords
+    const isMatch = await bcrypt.compare(req.body.password, user.password);
+    if (!isMatch) {
+      return next(new ApiError("Incorrect email or password", 401));
+    }
+  
 
-  //3)Generation token
+  //4)Generation token
   const token = createToken(user._id);
   return res.status(201).json({
     data: sanitizeUser(user),

@@ -1,20 +1,20 @@
 exports.sanitizeUser=function(user) {
     return {
         _id:user._id,
-        firstName:user.firstName,
-        lastName:user.lastName,
-        Email:user.Email,
-        BirthDay:user.dateOfBirthOfMam
+        name:user.name,
+        email:user.email,
+        phoneNumber:user.phoneNumber,
+        role:user.role
     };
 
 };
 
 exports.sanitizeUsers = function(users) {
     return users.map(user => ({
-        _id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        Email: user.Email,
-        Birthday: user.dateOfBirthOfMam
+        _id:user._id,
+        name:user.name,
+        email:user.email,
+        phoneNumber:user.phoneNumber,
+        role:user.role
     }));
   };
