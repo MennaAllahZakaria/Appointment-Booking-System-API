@@ -9,17 +9,22 @@ const sendEmail = async (options) => {
     secure: true,
     auth: {
       user: process.env.EMAIL_USER, //send by him email
-      pass: process.env.EMAIL_PASSWORD,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   // 2) Define email options (like from, to, subject, email content)
   const mailOpts = {
-    from: "CareNest <nabihmohaned@gmail.com>",
-    to: options.Email,
+    from: "appointment-booking-system <mennazakaria2003@gmail.com>",
+    to: options.email,
     subject: options.subject,
     text: options.message,
   };
+
+  
+  if (!mailOpts.to) {
+    throw new Error("No recipients defined");
+  }
 
   // 3) Send email
   await transporter.sendMail(mailOpts);

@@ -41,7 +41,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
   try {
     // console.log("Sending email to:", req.body.Email);
     await sendEmail({
-      Email: req.body.email,
+      email: req.body.email,
       subject: "Email Verification Code (valid for 10 min)",
       message,
     });
@@ -66,8 +66,9 @@ exports.signup = asyncHandler(async (req, res, next) => {
       message: "Verification code sent to your email.",
       token,
     });
-  } catch {
-    return next(new ApiError("There is an error in sending email", 500));
+  } catch (e){
+    console.error(e);
+    return next(new ApiError("There is an error in sending email",e, 500));
   }
 });
 
