@@ -24,6 +24,13 @@ exports.createAppointment =asyncHandler(async (req,res,next)=>{
 
     const appointment = await Appointment.create(req.body);
 
+    const user = req.user;
+    user.appointments.push(appointment._id);
+    await user.save();
+
+    provider.appointments.push(appointment._id);
+    await provider.save();
+
     res.status(201).json({data: appointment});
 });
 // @desc    get All Appointments For Provider
@@ -94,12 +101,24 @@ exports.changeAppointmentStatus = asyncHandler(async (req,res,next)=>{
 // @access  Private/user
 
 exports.deleteAppointment = asyncHandler(async (req,res,next)=>{
-    const appointment = await Appointment.findByIdAndDelete(req.params.id);
+    const appointment = await Appointment.findById(req.params.id);
     if(!appointment){
         return next(new ApiError(`No appointment found with id ${req.params.id}`, 404));
     }
-    if(appointment.userId!=req.user.id){
+    if(!appointment.userId.equals(req.user.id)){
         return next(new ApiError("Only user can delete their own appointment", 403));
     }
+    const user=req.user;
+    user.appointments.pull(appointment._id);
+    await user.save();
+
+    const provider = await User.findById(appointment.providerId);
+    if(!provider) 
+        return next(new ApiError(`No provider found with id ${appointment.providerId}`, 404));
+    provider.appointments.pull(appointment._id);
+    await provider.save();
+
+    await appointment.remove();
+    
     res.status(204).json({msg: "Appointment deleted"});
 });

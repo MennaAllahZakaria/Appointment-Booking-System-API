@@ -2,11 +2,7 @@ const { check } = require("express-validator");
 const validatorMiddleware = require("../../middelware/validatorMiddleware");
 
 exports.createAppointmentValidator = [
-    check("userId")
-                .notEmpty()
-                .withMessage("User ID is required")
-                .isMongoId()
-                .withMessage("User ID is not valid"),
+
     check("providerId")
                 .notEmpty()
                 .withMessage("Provider ID is required")
