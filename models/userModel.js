@@ -59,8 +59,11 @@ const userSchema = new mongoose.Schema({
                 type: String,
                 enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
                 required: true,
+                required: function () {
+                    return this.role === 'provider'; // Validate only for providers
+                },
             }, // e.g., "Monday"
-            time: [String], // e.g., ["10:00 AM - 11:00 AM", "3:00 PM - 4:00 PM"]
+            times: [String], // e.g., ["10:00 AM - 11:00 AM", "3:00 PM - 4:00 PM"]
         },
     ],
       // Shared field for appointments
