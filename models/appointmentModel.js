@@ -21,6 +21,10 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'accepted', 'rejected', 'canceled'],
         default: 'pending',
+    },
+    notificationSend:{
+        type: Boolean,
+        default: false,
     }
     
 },{ timestamps: true,});
