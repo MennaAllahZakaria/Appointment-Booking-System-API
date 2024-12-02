@@ -118,7 +118,7 @@ exports.deleteAppointment = asyncHandler(async (req,res,next)=>{
     provider.appointments.pull(appointment._id);
     await provider.save();
 
-    await appointment.remove();
+    await appointment.deleteOne();
     
     res.status(204).json({msg: "Appointment deleted"});
 });
