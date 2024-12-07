@@ -12,7 +12,7 @@ const {
 const {
     createAppointmentValidator,
     updateAppointmentValidator,
-    deleteAppointmentValidator
+    idAppointmentValidator
 } = require("../utils/validators/appointmentValidator");
 
 const { protect, allowedTo } = require("../services/authService");
@@ -28,7 +28,7 @@ router.get('/AllForProvider',allowedTo("provider"),getAllAppointmentsForProvider
 router.get('/AllForUser',allowedTo("user"),getAllAppointmentsForUser);
 
 router.route('/:id').put(allowedTo('user'),updateAppointmentValidator,updateAppointment)
-                    .delete(allowedTo('user'), deleteAppointmentValidator, deleteAppointment);
+                    .delete(allowedTo('user'), idAppointmentValidator, deleteAppointment);
 
 router.route('/changeStatus/:id').put(allowedTo('provider'), changeAppointmentStatus);
 

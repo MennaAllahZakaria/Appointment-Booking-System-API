@@ -41,7 +41,7 @@ exports.updateAppointmentValidator = [
 validatorMiddleware,
 ];
 
-exports.deleteAppointmentValidator = [
+exports.idAppointmentValidator = [
     check("id")
                 .notEmpty()
                 .withMessage("Appointment ID is required")

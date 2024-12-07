@@ -25,7 +25,23 @@ const appointmentSchema = new mongoose.Schema({
     notificationSend:{
         type: Boolean,
         default: false,
-    }
+    },
+    amount:{
+        type: Number,
+        required: true,
+    },
+    payment_id: String,  // for payment gateway like PayPal, Stripe, etc.
+    payment_method: {
+        type: String,
+        enum: ['cash', 'card'],
+        default: 'cash',
+    },
+    isPaid:{
+        type:Boolean,
+        defaulte:false
+    },
+    paidAt:Date,
+    
     
 },{ timestamps: true,});
 
