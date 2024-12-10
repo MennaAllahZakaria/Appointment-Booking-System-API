@@ -9,7 +9,7 @@ const mountRoutes = require("./routes/index");
 const globalError = require("./middelware/errorMiddleware");
 const dbConnection = require("./config/database");
 //Routes
-// const mountRoutes = require("./routes");
+
 const path = require("path");
 //connect with db
 dbConnection();
